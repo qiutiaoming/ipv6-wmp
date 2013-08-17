@@ -1,0 +1,747 @@
+﻿<Fluent:RibbonWindow x:Class="BlackApplePlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mediaControl="clr-namespace:AxWMPLib;assembly=AxInterop.WMPLib"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+        FontFamily="YouYuan"      
+        Title="BlackApplePlayer" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Icon="/BlackApplePlayer;component/Images/tv.png" Height="710" Width="1150" Closed="RibbonWindow_Closed" WindowState="Maximized">
+    <Window.Resources>
+        <!--A Style that affects all TextBlocks-->
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!--A Style that extends the previous TextBlock Style-->
+        <!--This is a "named style" with an x:Key of TitleText-->
+        <Style BasedOn="{StaticResource {x:Type TextBlock}}"
+           TargetType="TextBlock"
+           x:Key="TitleText">
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.0" Color="OrangeRed" />
+                            <GradientStop Offset="1.0" Color="#5BFFFF" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid   >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>   
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="140*" />
+        </Grid.RowDefinitions>
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>-->
+        <StackPanel Margin="0,0,5,5" TextOptions.TextFormattingMode="Display">
+            <Fluent:Ribbon Grid.ColumnSpan="2" VerticalAlignment="Stretch" >
+
+                <!--Contextual Tab Groups-->
+                <Fluent:Ribbon.ContextualGroups>
+                    <Fluent:RibbonContextualTabGroup Header="Tools" Visibility="Visible" x:Name="toolsGroup" Background="Green" BorderBrush="Green" />
+                </Fluent:Ribbon.ContextualGroups>
+
+
+                <Fluent:Ribbon.Menu>
+                    <Fluent:Backstage>
+                        <Fluent:BackstageTabControl >
+                            <Fluent:BackstageTabItem Header="设置"  >
+
+                                <Grid x:Name="LayoutRoot" Margin="20" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock  VerticalAlignment="Bottom" FontSize="16" Foreground="Black"  ToolTip="点击更换主题" Margin="9,0,0,0" HorizontalAlignment="Left"><Run Text="主题样式"/></TextBlock>
+                                    <TextBlock HorizontalAlignment="Left" Margin="0" Foreground="Black"  Text="-----------------------------------------------------------------------------------------------------" VerticalAlignment="Bottom"  Opacity="0.5" Grid.ColumnSpan="3" Grid.Row="1" d:LayoutOverrides="GridBox"/>
+                                    <RadioButton Content="Office 2010 Silver" Name="Silver"  Grid.Row="2" VerticalAlignment="Center" Margin="8,8,0,8" GroupName="ThemeStyle" HorizontalAlignment="Left" Checked="RadioButton_MouseDown" />
+                                    <RadioButton Margin="8,8,0,8" Grid.Row="2" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Content="Office 2010 Black" Name="Black"  GroupName="ThemeStyle" Checked="RadioButton_MouseDown" />
+                                    <RadioButton Content="Office 2010 Blue" Name="Blue" Margin="8,8,0,8" Grid.Row="2" VerticalAlignment="Center" Grid.Column="2" d:LayoutOverrides="Width" GroupName="ThemeStyle" Checked="RadioButton_MouseDown" />
+                                    <TextBlock  VerticalAlignment="Bottom" Foreground="Black" FontSize="16" ToolTip="缓存将在程序关闭时删除" Margin="9,0,0,0" HorizontalAlignment="Left" Grid.Row="3" Text="缓存"/>
+                                    <TextBlock HorizontalAlignment="Left" Margin="0" Foreground="Black"  Text="-----------------------------------------------------------------------------------------------------" VerticalAlignment="Bottom"  Opacity="0.5" Grid.ColumnSpan="3" Grid.Row="4"/>
+                                    <RadioButton  Content="删除" Name="DeleRBtn"  Grid.Row="5" Margin="8,8,0,8" HorizontalAlignment="Left"  GroupName="DeleBuffer"  IsChecked="True" Checked="DeleRBtn_Checked" />
+                                    <RadioButton Margin="8,8,0,8" Name="KeepRBtn"  Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Content="保留" GroupName="DeleBuffer" BorderThickness="1" VerticalAlignment="Bottom" Height="19.542" Checked="KeepRBtn_Checked" />
+                                </Grid>
+                            </Fluent:BackstageTabItem>
+                        <Fluent:BackstageTabItem Header="帮助">
+                                <Grid Margin="20">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>                                      
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                       <!--<Image Source="/BlackApplePlayer;component/Images/qtm.jpg" Margin="10,10,0,0" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" ></Image>-->   
+                                    <StackPanel Grid.Column="1" Margin="5" TextBlock.Foreground="Black">
+
+                                        <TextBlock Style="{StaticResource TitleText}"   Name="textblock1" HorizontalAlignment="Center" Margin="10" Grid.ColumnSpan="2">聚趣坊网®</TextBlock>
+                                        
+                                       
+                                            <Image Source="/BlackApplePlayer;component/Images/colfun1.png"  HorizontalAlignment="Center"   Stretch="None"></Image>
+
+
+                                        <TextBlock Height="23" Name="textBlock20" Text="  " />
+
+                                        <TextBlock Height="23" Name="textBlock2" Text="BlackApplePlayer 2.0" />
+                                        <TextBlock Height="23" Name="textBlock12" Text="本软件仅供个人学习使用，免费使用，禁止任何形式的商业使用" />
+                                        <TextBlock Height="23" Name="textBlock11" Text="由聚趣坊网提供" />
+                                        <TextBlock Height="23" Name="textBlock3" Text="CopyRight: 漫雪南山" />
+
+                                        <TextBlock Height="23" Name="textBlock17" Text="www.colfun.com" />
+
+                                        <TextBlock Height="23" Name="textBlock6" Text="基于WMPLib和Fluent的IPV6播放器" />
+                                        <TextBlock Height="23" Name="textBlock7" Text="如果您有个性化需求或者您知道有比较好的电视台" />
+                                        <TextBlock Height="23" Name="textBlock8" Text="您可以主动联系我" />
+                                        <TextBlock Height="23" Name="textBlock10" Text="我会尽最大的努力满足您的要求" />
+                                        <TextBlock Height="23" Name="textBlock9" Text="如果实在满足不了您的要求，也希望您给出宝贵的意见" />
+                                        <TextBlock Height="23"  Name="textBlock18" Text="有任何问题都可以去www.colfun.com/blackappleplayer.html 留言(直接点击链接就可以了)" MouseDown="textBlock18_MouseDown"  Background="#FF00EC00" MouseEnter="textBlock18_MouseEnter" />
+                                        <TextBlock Height="23" Name="textBlock16" Text="版权说明：（1）本软件电视资源均由网友收集获得，若在无意间侵犯到您的权利，请让我知晓，我将立即修正资源。" TextWrapping="Wrap" />
+                                        <TextBlock Height="23" Name="textBlock19" Text="          （2）本软件中使用的图标均由网站中收集获得，若在无意间侵犯到您的权利，请让我知晓，我将立即修正资源。" TextWrapping="Wrap" />
+                                        <TextBlock Height="23" Name="textBlock13" Text="  " />
+                                        <TextBlock Height="23" Name="textBlock14" Text="  " />
+                                        <TextBlock Height="23" Name="textBlock15" Text="若能相濡以沫，我愿与你执手天涯  " />
+                                        
+                                    </StackPanel>
+                                </Grid>
+                            </Fluent:BackstageTabItem>
+                            <Fluent:BackstageTabItem Header="关于聚趣坊">
+                                <Grid Margin="20">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="3*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Grid.Row="1" Source="/BlackApplePlayer;component/Images/qtm.jpg" Margin="10,10,0,0" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Height="436" />
+        <StackPanel>
+                                        <TextBlock Background="#FF00EC00" FontSize="20" FontStyle="Italic">
+                                        关于聚趣坊
+                                       </TextBlock>
+
+                                    <TextBlock >
+ 聚趣坊网（www.colfun.com）成立于2012年8月11日（备案时间），以后每年我都会这个时间去买个蛋糕，然后自己吃掉(=^ ^=)，<LineBreak/>
+现网站主要以影视评论为主，希望能提供一个平台，<LineBreak/>
+让那些喜欢电影、喜欢电视剧的人来分享自己的感受，不管是迷惑、感动亦或是忧伤，这里都有属于你的地方。<LineBreak/>
+网站首页和内容页上都有我的微博，若对本站内容敢兴趣，你也可以点击关注我，文章会自动同步到微博上的...<LineBreak/>
+有欢乐的地方就会有聚趣坊...
+
+                                    </TextBlock>
+</StackPanel>
+                                </Grid>
+                            </Fluent:BackstageTabItem>
+                        </Fluent:BackstageTabControl>
+                    </Fluent:Backstage>
+                </Fluent:Ribbon.Menu>
+                <Fluent:RibbonTabItem Header="高清卫视">
+
+                    <Fluent:RibbonGroupBox Header="中央" FontStretch="Normal" HorizontalAlignment="Stretch" IsEnabled="True" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="央视综合"  LargeIcon="Images\cctv02.ico" Header="央视综合" Click="TV_Click" FontSize="14"></Fluent:Button>
+
+                        <Fluent:Button Name="央视财经" SizeDefinition="Middle" Header="央视财经" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="央视综艺" SizeDefinition="Middle" Header="央视综艺" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="中文国际" SizeDefinition="Middle" Header="中文国际" Icon="Images\cctv011.ico"   Click="TV_Click"  FontSize="11"></Fluent:Button>
+                        <Fluent:Button Name="央视体育" SizeDefinition="Middle" Header="央视体育" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="央视电影" SizeDefinition="Middle" Header="央视电影" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="军事农业" SizeDefinition="Middle" Header="军事农业" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+
+                        <Fluent:Button Name="央视电视剧" SizeDefinition="Middle" Header="电视剧" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="央视News" SizeDefinition="Middle" Header="News" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="央视高清" SizeDefinition="Middle" Header="央视高清" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+
+
+
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="北京" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="北京卫视"  LargeIcon="Images\bjtv.ico"    Header="北京卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="上海" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="东方卫视" 
+                                   LargeIcon="Images\shanghuitv.ico"
+                                   Header="东方卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="湖南" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="湖南卫视" 
+                                   LargeIcon="Images\hnws.ico"
+                                   Header="湖南卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="吉林" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="吉林卫视"  LargeIcon="Images\jltv1.ico"    Header="吉林卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="湖北" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="湖北卫视"  LargeIcon="Images\hbtv.ico"    Header="湖北卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="山西" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="山西卫视"  LargeIcon="Images\sxtv.ico"    Header="山西卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="天津" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="天津卫视"  LargeIcon="Images\tjtv.ico"    Header="天津卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="山东" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="山东卫视"  LargeIcon="Images\sdtv.ico"    Header="山东卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="重庆" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="重庆卫视"  LargeIcon="Images\cqtv.ico"    Header="重庆卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="甘肃" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="甘肃卫视"  LargeIcon="Images\gstv.ico"    Header="甘肃卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="江苏" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="江苏卫视"  LargeIcon="Images\jstv.ico"    Header="江苏卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="黑龙江" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="黑龙江卫视"  LargeIcon="Images\hljtv.ico"    Header="黑龙江卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="浙江" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="浙江卫视"  LargeIcon="Images\zjtv.ico"    Header="浙江卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="广西" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="广西卫视"  LargeIcon="Images\gxtv.ico"    Header="广西卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+                    <!--图片-->
+
+
+                </Fluent:RibbonTabItem>
+                
+                <Fluent:RibbonTabItem Header="高清卫视">
+                    <Fluent:RibbonGroupBox Header="内蒙古" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="内蒙古卫视"  LargeIcon="Images\nmgtv.ico"    Header="内蒙古卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="广东" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="广东卫视"  LargeIcon="Images\guangdongtv.ico"    Header="广东卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="四川" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="四川卫视"  LargeIcon="Images\sctv.ico"    Header="四川卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="江西" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="江西卫视"  LargeIcon="Images\jxtv.ico"    Header="江西卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="青海" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="青海卫视"  LargeIcon="Images\qhtv.ico"    Header="青海卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="福建" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="东南卫视"  LargeIcon="Images\dntv.ico"    Header="东南卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="河南" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="河南卫视"  LargeIcon="Images\hntv.ico"    Header="河南卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="新疆" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="新疆卫视"  LargeIcon="Images\xjtv.ico"    Header="新疆卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="贵州" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="贵州卫视"  LargeIcon="Images\gztv.ico"    Header="贵州卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="海南" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="旅游卫视"  LargeIcon="Images\hntv(海).ico"    Header="旅游卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="宁夏" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="宁夏卫视"  LargeIcon="Images\nxtv.ico"    Header="宁夏卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="陕西" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="陕西卫视"  LargeIcon="Images\sxtv.ico"    Header="陕西卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="安徽" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="安徽卫视"  LargeIcon="Images\ahtv.ico"    Header="安徽卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="辽宁" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="辽宁卫视"  LargeIcon="Images\lntv.ico"    Header="辽宁卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="云南" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="云南卫视"  LargeIcon="Images\yntv.ico"    Header="云南卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <!--<Fluent:RibbonGroupBox Header="甘肃卫视" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="甘肃卫视"  LargeIcon="Images\gxtv.ico"    Header="甘肃卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>-->
+
+                    <Fluent:RibbonGroupBox Header="西藏" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="西藏卫视"  LargeIcon="Images\xztv.ico"    Header="西藏卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox Header="河北" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="河北卫视"  LargeIcon="Images\hebeitv.ico"    Header="河北卫视" Click="TV_Click"  />
+                    </Fluent:RibbonGroupBox>
+
+                </Fluent:RibbonTabItem>
+                <Fluent:RibbonTabItem Header="地方高清">
+                    <Fluent:RibbonGroupBox Header="SITV" FontStretch="Normal" HorizontalAlignment="Stretch" IsEnabled="True" FontFamily="Comic Sans MS"  FontSize="12">
+                        <Fluent:Button Name="SiTV"  LargeIcon="Images\sitv.ico" Header="SiTV" Click="TV_Click" FontSize="14"></Fluent:Button>
+
+                        <Fluent:Button Name="SiTV白金剧场" SizeDefinition="Middle" Header="白金剧场" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV点播影院" SizeDefinition="Middle" Header="点播影院" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV动作影院" SizeDefinition="Middle" Header="动作影院" Icon="Images\sitv1.ico"   Click="TV_Click"  FontSize="11"></Fluent:Button>
+                        <Fluent:Button Name="SiTV海外影院" SizeDefinition="Middle" Header="海外影院" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV怀旧影院" SizeDefinition="Middle" Header="怀旧影院" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV节目预告" SizeDefinition="Middle" Header="节目预告" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+
+                        <Fluent:Button Name="SiTV劲爆足球" SizeDefinition="Middle" Header="劲爆足球" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV立体娱乐" SizeDefinition="Middle" Header="立体娱乐" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV情感影院" SizeDefinition="Middle" Header="情感影院" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV生活时尚" SizeDefinition="Middle" Header="生活时尚" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV首映剧场" SizeDefinition="Middle" Header="首映剧场" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV五星体育" SizeDefinition="Middle" Header="五星体育" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV学习考试" SizeDefinition="Middle" Header="学习考试" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV英语教室" SizeDefinition="Middle" Header="英语教室" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV娱乐前线" SizeDefinition="Middle" Header="娱乐前线" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="SiTV资讯气象" SizeDefinition="Middle" Header="资讯气象" Icon="Images\sitv1.ico"   Click="TV_Click" ></Fluent:Button>
+                    </Fluent:RibbonGroupBox>
+                    
+                    
+                </Fluent:RibbonTabItem>
+                <Fluent:RibbonTabItem Header="央视标清">
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-1" FontFamily="Comic Sans MS"  FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视综合"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视综合(北邮)" Name="央视综合_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视综合(大连理工)" Name="央视综合_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-2" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视财经"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视财经(北邮)" Name="央视财经_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视财经(大连理工)" Name="央视财经_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-3" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视综艺"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视综艺(北邮)" Name="央视综艺_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视综艺(大连理工)" Name="央视综艺_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-4" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="中文国际"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="中文国际(北邮)" Name="中文国际_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="中文国际(大连理工)" Name="中文国际_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-5" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视体育"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视体育(北邮)" Name="央视体育_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视体育(大连理工)" Name="央视体育_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-6" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视电影"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视电影(北邮)" Name="央视电影_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视电影(大连理工)" Name="央视电影_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-7" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="军事农业"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="军事农业(北邮)" Name="军事农业_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="军事农业(大连理工)" Name="军事农业_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-8" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视电视剧"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视电视剧(北邮)" Name="央视电视剧_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视电视剧(大连理工)" Name="央视电视剧_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-9" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="英语国际"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="英语国际(北邮)" Name="英语国际_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="英语国际(大连理工)" Name="英语国际_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-10" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="科学教育"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="科学教育(北邮)" Name="科学教育_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="科学教育(大连理工)" Name="科学教育_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-11" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视戏曲"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视戏曲(北邮)" Name="央视戏曲_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视戏曲(大连理工)" Name="央视戏曲_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-12" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="社会与法"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="社会与法(北邮)" Name="社会与法_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="社会与法(大连理工)" Name="社会与法_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-News" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视新闻"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视新闻(北邮)" Name="央视新闻_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视新闻(大连理工)" Name="央视新闻_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-music" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视音乐"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视音乐(北邮)" Name="央视音乐_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-kid" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视少儿"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视少儿(北邮)" Name="央视少儿_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CCTV-HD" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视高清"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视高清(北邮)" Name="央视高清_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视高清(大连理工)" Name="央视高清_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CETV-1" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="中国教育1"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="中国教育1(北邮)" Name="中国教育1_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="中国教育1(大连理工)" Name="中国教育1_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <Fluent:RibbonGroupBox  Header="CETV-3" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="中国教育3"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="中国教育3(北邮)" Name="中国教育3_北邮" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="中国教育3(大连理工)" Name="中国教育3_大连理工" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>               
+
+
+                </Fluent:RibbonTabItem>
+                <Fluent:RibbonTabItem Header="体育*奥运">
+                    <Fluent:RibbonGroupBox  Header="CCTV-1" FontFamily="Comic Sans MS"  FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视综合"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视综合" Name="央视综合__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视综合(北邮)" Name="央视综合_北邮__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视综合(大连理工)" Name="央视综合_大连理工__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+                    <Fluent:RibbonGroupBox  Header="CCTV-7" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="军事农业"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="军事农业" Name="军事农业__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="军事农业(北邮)" Name="军事农业_北邮__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="军事农业(大连理工)" Name="军事农业_大连理工__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                        
+                        
+                    </Fluent:RibbonGroupBox>
+                    <Fluent:RibbonGroupBox  Header="CCTV-HD" FontFamily="Comic Sans MS" FontSize="12">
+                        <Fluent:DropDownButton Fluent:KeyTip.Keys="R"  Header="央视高清"  LargeIcon="Images/CCTV02.ico" SizeDefinition="Large">
+                            <Fluent:MenuItem Header="央视高清" Name="央视高清__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视高清(北邮)" Name="央视高清_北邮__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视高清(大连理工)" Name="央视高清_大连理工__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视高清(兰州大学)" Name="央视高清_兰州大学__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="央视高清(华南师范)" Name="央视高清_华南师范__" Click="TV_Click">
+                                <Fluent:MenuItem.Icon>
+                                    <Image Source="Images/CCTV01.ico" />
+                                </Fluent:MenuItem.Icon>
+                            </Fluent:MenuItem>
+                        </Fluent:DropDownButton>
+                    </Fluent:RibbonGroupBox>
+
+                    <!--<Fluent:RibbonGroupBox Header="央视综合" FontStretch="Normal" HorizontalAlignment="Stretch" IsEnabled="True" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="央视综合__"  Icon="Images\cctv011.ico" Header="央视综合" Click="TV_Click" FontSize="14"></Fluent:Button>
+
+                        <Fluent:Button Name="央视综合_北邮__" SizeDefinition="Middle" Header="央视综合(北邮)" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="央视综合_大连理工__" SizeDefinition="Middle" Header="央视综合(大连理工)" Icon="Images\cctv011.ico"   Click="TV_Click" >
+                            
+                       </Fluent:Button>
+                    </Fluent:RibbonGroupBox>
+                    
+                    <Fluent:RibbonGroupBox Header="央视高清" FontStretch="Normal" HorizontalAlignment="Stretch" IsEnabled="True" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="央视高清__"  LargeIcon="Images\cctv02.ico" Header="央视高清" Click="TV_Click" FontSize="14"></Fluent:Button>
+
+                        <Fluent:Button Name="央视高清_北邮__" SizeDefinition="Middle" Header="央视高清(北邮)" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="央视高清_大连理工__" SizeDefinition="Middle" Header="央视高清(大连理工)" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="央视高清_兰州大学__" SizeDefinition="Middle" Header="央视高清(兰州大学)" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="央视高清_华南师范__" SizeDefinition="Middle" Header="央视高清(华南师范)" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                    </Fluent:RibbonGroupBox>
+                    <Fluent:RibbonGroupBox Header="军事农业" FontStretch="Normal" HorizontalAlignment="Stretch" IsEnabled="True" FontFamily="行楷体" FontSize="14">
+                        <Fluent:Button Name="军事农业__"  LargeIcon="Images\cctv02.ico" Header="军事农业" Click="TV_Click" FontSize="14"></Fluent:Button>
+
+                        <Fluent:Button Name="军事农业_北邮__" SizeDefinition="Middle" Header="军事农业(北邮)" Icon="Images\cctv011.ico"   Click="TV_Click" ></Fluent:Button>
+                        <Fluent:Button Name="军事农业_大连理工__" SizeDefinition="Middle" Header="军事农业(大连理工)" Icon="Images\cctv011.ico"   Click="TV_Click" >
+
+                        </Fluent:Button>
+                    </Fluent:RibbonGroupBox>-->
+
+
+                </Fluent:RibbonTabItem>
+                <Fluent:RibbonTabItem Header="新闻娱乐">
+                    
+                </Fluent:RibbonTabItem>
+                <Fluent:RibbonTabItem Header="时尚购物">
+                    
+                </Fluent:RibbonTabItem>
+                <Fluent:RibbonTabItem Header="广播电台">
+                    
+                </Fluent:RibbonTabItem>
+                <Fluent:RibbonTabItem Header="国外影视">
+                    
+                </Fluent:RibbonTabItem>
+            </Fluent:Ribbon>            
+            <StackPanel Grid.Row="1" Margin="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></StackPanel>
+        </StackPanel>
+        <DockPanel Grid.Row="2" LastChildFill="True" FlowDirection="RightToLeft">
+            <Expander Name="SearchExpander"  ExpandDirection="Right" FlowDirection="LeftToRight" Header="搜索" Opacity="0.5" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  LostFocus="SearchExpander_LostFocus">
+         
+                    <DockPanel Margin="10" DockPanel.Dock="Top" >
+                    <TextBox Name="SearchText"  DockPanel.Dock="Top" Text="输入搜索" FontStyle="Italic"  GotFocus="SearchText_GotFocus" MinWidth="180" FontSize="16" TextChanged="SearchText_TextChanged" LostFocus="SearchText_LostFocus" MinHeight="0" MaxWidth="200" />
+                    <ListBox Name="listBox" Margin="0,10,0,0" Padding="5" FontSize="14" ListBoxItem.MouseDoubleClick="listBox_MouseDoubleClick" ToolTip="双击播放" />       
+                </DockPanel>
+                
+            </Expander>
+            <Border CornerRadius="2" BorderThickness="2">
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0.919" />
+                        <GradientStop Color="#56DE55E7" Offset="0.423" />
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+                <WindowsFormsHost MinWidth="20" MinHeight="20" Grid.Row="2" DockPanel.Dock="Left">
+                    <mediaControl:AxWindowsMediaPlayer x:Name="TVMediaPlayer"  />
+                </WindowsFormsHost>
+
+            </Border>
+            
+        </DockPanel>
+
+
+    </Grid>
+</Fluent:RibbonWindow>

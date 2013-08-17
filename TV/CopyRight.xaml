@@ -1,0 +1,63 @@
+﻿<Window x:Class="TV.CopyRight"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CopyRight" Height="687" Width="933">
+    <Window.Resources>
+        <!--A Style that affects all TextBlocks-->
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!--A Style that extends the previous TextBlock Style-->
+        <!--This is a "named style" with an x:Key of TitleText-->
+        <Style BasedOn="{StaticResource {x:Type TextBlock}}"
+           TargetType="TextBlock"
+           x:Key="TitleText">
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.0" Color="OrangeRed" />
+                            <GradientStop Offset="1.0" Color="#5BFFFF" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Margin="3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            
+
+        </Grid.ColumnDefinitions>
+
+
+        <Image Source="/TV;component/Images/qtm.jpg" Margin="10,10,0,0" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Height="546" Width="378"></Image>
+        <StackPanel Grid.Column="1" >
+
+        <TextBlock Style="{StaticResource TitleText}"   Name="textblock1" HorizontalAlignment="Center" Margin="10" Grid.ColumnSpan="2">Little Lazy Boy®</TextBlock>
+         <Image Source="/TV;component/Images/tv.png"  Margin="10" HorizontalAlignment="Center" Width="255" Stretch="None"></Image>
+            <TextBlock Height="23" Name="textBlock2" Text="BlackApplePlayer" />
+            <TextBlock Height="23" Name="textBlock11" Text="中国农业大学图书馆" />
+            <TextBlock Height="23" Name="textBlock3" Text="CopyRight:邱末" />
+            <TextBlock Height="23" Name="textBlock4" Text="QQ:769485540" />
+            <TextBlock Height="23" Name="textBlock5" Text="Email:qtm315@qq.com" />
+            <TextBlock Height="23" Name="textBlock6" Text="基于WMPList和Fluent的IPV6播放器" />
+            <TextBlock Height="23" Name="textBlock7" Text="如果您有个性化需求或者您知道有比较好的电视台" />
+            <TextBlock Height="23" Name="textBlock8" Text="您可以主动联系我" />
+            <TextBlock Height="23" Name="textBlock10" Text="我会尽最大的努力满足您的要求" />
+            <TextBlock Height="23" Name="textBlock9" Text="如果实在满足不了您的要求，也希望您提出宝贵的意见" />
+        </StackPanel>
+    </Grid>
+</Window>
