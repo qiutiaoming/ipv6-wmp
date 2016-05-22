@@ -9,5 +9,7 @@ BlackApplePlayer是一款界面相对精美、使用方便的IPV6电视直播软
   * 3.BlackApplePlayer能够高清收看到全国所有卫视，还有部分地方台的高清，总共好像有100多个电视节目源吧。
   * 4.右边设计了一个简单的搜索，不想显示的话，可以隐藏起来。
 
-   
+## 类库
+Fluent.Ribbon:[https://github.com/fluentribbon/Fluent.Ribbon](https://github.com/fluentribbon/Fluent.Ribbon)
 ## 截图
+   ![BlackApplePlayer](./Screen/blackappleplayer2.png)
